@@ -5,11 +5,32 @@
             Edit Task
         </h1>
         <div class="tasks">
-            <form action="" method="POST">
-                <textarea name="task" id="" placeholder="Enter your note here"></textarea>
+            <form action="{{ route('task.update', $task) }}" method="POST">
+                @csrf
+                @method('PUT')
+                 <div class="mb-3">
+                    <label for="title" class="form-label">Title of the task</label>
+                    <input 
+                        type="text" 
+                        name="title"
+                        id="title" 
+                        class="form-control" 
+                        value="{{ old('title', $task->title) }}" 
+                        required>
+                    <input type="text"
+                        name="description"
+                        id="description" 
+                        class="form-control" 
+                        value="{{ old('description', $task->description) }}" 
+                        >
+        </div>
+
+
                 <div class="task-buttons">
-                    <a href="{{ route('task.index') }}" class="task-cancel-button">Cancel</a>
-                    <button class="task-submit-button">Submit</button>
+                    
+                    <button type="submit" class="btn btn-primary">Actualizar</button>
+                    <a href="{{ route('task.index') }}" class="btn btn-secondary">Cancel</a>
+                
                 </div>
             </form>
         </div>
