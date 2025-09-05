@@ -6,14 +6,24 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Task extends Model
 {
-    //asignacion masiva fillable
-    //protected $fillable = ['title', 'description'];
-    use Softdeletes;
+    protected $fillable = ['title', 'description', 'completed'];
+    protected $casts = [
+        'completed'  => 'boolean',
+        'deleted_at' => 'datetime',
+    ];
+    /**
+     * RETURN  of categories
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<Category, Task>
+     */
+    use SoftDeletes;
     protected $dates = ['deleted_at'];
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class);
+    }
 
 
-    //relacion uno a muchos inversa
-public function category()
+    public function category()
     { //belongs to devueve una sola categoria
         return $this->belongsTo(Category::class);
     }

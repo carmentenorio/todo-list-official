@@ -76,4 +76,12 @@ class TaskController extends Controller
         return redirect()->route('task.index', ['task' => $task])
             ->with('success', 'Tarea eliminada 🗑️');
     }
+
+    public function toggle(Task $task){
+        
+        $task->completed = !$task->completed;
+        $task->save();
+        return redirect()->route(route: 'task.index');
+        
+    }
 }
