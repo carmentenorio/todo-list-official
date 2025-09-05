@@ -10,6 +10,6 @@ class Category extends Model
 
     public function task()
     {
-        return $this->belongsTo(Task::class);
+        return $this->belongsToMany(Task::class);
     }
 }

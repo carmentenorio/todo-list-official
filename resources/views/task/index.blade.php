@@ -8,9 +8,14 @@
         <div class="tasks">
             @foreach ($tasks as $task)
                 <div class="task border p-3 mb-3 bg-white rounded">
-                    <form action="">
-                        <input type="checkbox" {{ $task->completed ? 'checked' : '' }} >
+                    <form action="{{ route('task.toggle', $task->id )}}" method="POST" class="d-inline">
+                        @csrf
+                        @method('PATCH')
+                        <input type="checkbox" onChange="this.form.submit()" {{ $task->completed ? 'checked' : '' }} >
                     </form>
+
+
+
                     <form action="{{ route('task.destroy', $task->id) }}" method="POST" style="display:inline;">
                         @csrf
                         @method('DELETE')
@@ -20,11 +25,13 @@
                     <a href="{{ route('task.show', $task) }}" class="btn btn-primary btn-sm">View</a>
                     <a href="{{ route('task.edit', $task) }}" class="btn btn-secondary btn-sm">Edit</a>
                     <button type="submit" class="btn btn-danger">
-                <i class="fa-solid fa-trash"></i>
-                </form>
-            </button>
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                    </form>
                 </div>
             @endforeach
         </div>
+
+        
     </div>
 @endsection
