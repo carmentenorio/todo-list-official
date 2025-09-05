@@ -1,25 +1,13 @@
 @extends('layouts.app')
 @section('title', 'Task List')
 @section('content')
-
-    <!-- Order your soul. Reduce your wants. - Augustine -->
     <div class="container mt-4">
         <a href="{{ route('task.create') }}" class="btn btn-success mb-3 btn-custom">
             New Task
         </a>
-        <!--<thead>
-            <tr>
-                <th>Title</th>
-                <th>Completed</th>
-                <th>Description</th>
-                <th>Actions</th>
-            </tr>
-        </thead>-->
-
         <div class="tasks">
             @foreach ($tasks as $task)
                 <div class="task border p-3 mb-3 bg-white rounded">
-
                     <form action="">
                         <input type="checkbox" {{ $task->completed ? 'checked' : '' }} >
                     </form>

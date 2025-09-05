@@ -1,6 +1,5 @@
 <x-layout>
-    <!-- I begin to speak only when I am certain what I will say is not better left unsaid. - Cato the Younger -->
-    <div class="container mt-4">
+   <div class="container mt-4">
         <h1>
             Edit Task
         </h1>
@@ -24,13 +23,10 @@
                         value="{{ old('description', $task->description) }}" 
                         >
         </div>
-
-
                 <div class="task-buttons">
                     
                     <button type="submit" class="btn btn-primary">Actualizar</button>
                     <a href="{{ route('task.index') }}" class="btn btn-secondary">Cancel</a>
-                
                 </div>
             </form>
         </div>
