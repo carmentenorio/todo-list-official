@@ -1,6 +1,5 @@
 <x-layout>
-    <!-- I begin to speak only when I am certain what I will say is not better left unsaid. - Cato the Younger -->
-        <div class="container mt-4">
+   <div class="container mt-4">
             <h1>Task Details</h1>
             <p>Here you can see the details of the task.</p>
         </div>
