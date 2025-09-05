@@ -3,6 +3,7 @@
     <h1>Create New Task</h1>
     <form action="{{ route('task.store') }}" method="POST" class="task-form">
         @csrf
+        <input type="checkbox" name="completed" value="1">
         <input type="text" name="title" placeholder="Enter task title" class="form-control" required>
         <textarea name="description" placeholder="Enter task description" class="form-control" required></textarea>
         <div class="task-buttons mt-2">

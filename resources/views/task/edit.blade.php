@@ -9,6 +9,14 @@
                 @method('PUT')
                  <div class="mb-3">
                     <label for="title" class="form-label">Title of the task</label>
+                   
+                   <label for="completed">
+                    <input 
+                        type="checkbox" 
+                        name="completed" value="1"
+                        {{ $task->completed ? 'checked': '' }}>
+                    Completed?
+                   </label>
                     <input 
                         type="text" 
                         name="title"

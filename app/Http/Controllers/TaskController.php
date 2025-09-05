@@ -29,10 +29,12 @@ class TaskController extends Controller
         $request->validate([
             'title'       => 'required|string|max:255',
             'description' => 'nullable|string',
+
         ]);
         $task = new Task(); 
         $task->title = $request->title;
         $task->description = $request->description;
+        $task->completed = $request->has('completed'); 
         $task->save();
         return redirect()->route('task.index');
     }
@@ -75,5 +77,13 @@ class TaskController extends Controller
         $task->delete();
         return redirect()->route('task.index', ['task' => $task])
             ->with('success', 'Tarea eliminada 🗑️');
+    }
+
+    public function toggle(Task $task){
+        
+        $task->completed = !$task->completed;
+        $task->save();
+        return redirect()->route(route: 'task.index');
+
     }
 }

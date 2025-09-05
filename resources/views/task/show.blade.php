@@ -5,8 +5,14 @@
         </div>
         <div class="container mt-4">
             <a href="{{ route('task.index') }}">
-                Back to Tasks
+                <button class="" >Back to Tasks</button>
             </a>
+               <label for="completed">
+                    <input 
+                        type="checkbox" 
+                        name="completed" value="1"
+                        {{ $task->completed ? 'checked': '' }}>
+                   </label>
             <div class="task border p-3 mb-3 bg-white rounded">
                 <h2 class="h5">{{ $task->title }}</h2>
                 <p class="mb-1 text-muted">{{ $task->created_at->format('d/m/Y H:i') }}</p>
