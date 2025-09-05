@@ -1,6 +1,6 @@
+<<<<<<< HEAD
 @extends('layouts.app')
 @section('title', 'Task Details')
-
 @section('content')
 <div class="container mt-4">
   <h1 class="h3 mb-3">Task Details</h1>
