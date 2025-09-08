@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
-    protected $fillable = ['name', 'task_id'];
+    //protected $fillable = ['name'];
 
-    public function task()
+    public function tasks()
     {
-        return $this->belongsTo(Task::class);
+        return $this->hasMany(Task::class);
     }
 }

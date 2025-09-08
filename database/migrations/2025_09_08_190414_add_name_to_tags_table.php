@@ -11,12 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tasks', function (Blueprint $table) {
-            $table->id();
-            $table->string('title');
-            $table->text('description')->nullable();
-            $table->foreignId('category_id')->nullable()->onDelete('cascade');
-            $table->timestamps();
+        Schema::table('tags', function (Blueprint $table) {
+            $table->string('name'); 
         });
     }
 
@@ -25,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tasks');
+        Schema::table('tags', function (Blueprint $table) {
+            //
+        });
     }
 };
