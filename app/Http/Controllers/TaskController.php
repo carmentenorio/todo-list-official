@@ -22,9 +22,9 @@ class TaskController extends Controller
     public function create()
     {
         $categories = Category::orderBy('name')->get();
-        $tags       = Tag::orderBy('name')->get();
-        return view('task.create', compact('categories', 'tags'));
 
+        $tags = Tag::orderBy('name')->get();
+        return view('task.create', compact('categories','tags'));
     }
     /**
      * Store a newly created resource in storage.
@@ -34,14 +34,20 @@ class TaskController extends Controller
         $request->validate([
             'title'       => 'required|string|max:255',
             'description' => 'nullable|string',
+            'category_id'  => 'required|exists:categories,id',
+            'tags'         => 'array',
+            'tags.*'       => 'integer|exists:tags,id',
 
         ]);
         $task              = new Task();
         $task->title       = $request->title;
         $task->description = $request->description;
-        $task->completed   = $request->has('completed');
-
+        $task->completed = $request->has('completed');
+        $task->category_id = $request->category_id; 
         $task->save();
+
+        $task->tags()->sync($validated['tags'] ?? []);
+        
         return redirect()->route('task.index');
     }
     /**
