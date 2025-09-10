@@ -13,9 +13,6 @@
                         @method('PATCH')
                         <input type="checkbox" onChange="this.form.submit()" {{ $task->completed ? 'checked' : '' }} >
                     </form>
-
-
-
                     <form action="{{ route('task.destroy', $task->id) }}" method="POST" style="display:inline;">
                         @csrf
                         @method('DELETE')

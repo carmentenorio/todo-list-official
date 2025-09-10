@@ -3,13 +3,48 @@
     <h1>Create New Task</h1>
     <form action="{{ route('task.store') }}" method="POST" class="task-form">
         @csrf
-        <input type="checkbox" name="completed" value="1">
-        <input type="text" name="title" placeholder="Enter task title" class="form-control" required>
-        <textarea name="description" placeholder="Enter task description" class="form-control" required></textarea>
-        <div class="task-buttons mt-2">
-            <a href="{{ route('task.index') }}" class="task-cancel-button">Cancel</a>
-            <button type="submit" class="task-submit-button">Submit</button>
+        <div class="form-check mb-3">
+          <input class="form-check-input" type="checkbox" name="completed" id="completed" {{ old('completed') ? 'checked' : '' }}>
+          <label class="form-check-label" for="completed">Completed?</label>
         </div>
-    </form>
+
+        <div class="mb-3">
+          <label for="title" class="form-label">Name of the task</label>
+          <input type="text" name="title" id="title" placeholder="Enter task title" class="form-control" value="{{ old('title') }}" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="description" class="form-label">Description</label>
+          <textarea name="description" id="description" placeholder="Enter task description" class="form-control" rows="3" required>{{ old('description') }}</textarea>
+        </div>
+        
+        <div class="mb-3">
+          <label for="category" class="form-label">Category</label>
+          <select name="category_id" id="category" class="form-select" required>
+            <option value="">Select a category</option>
+            @foreach($categories as $category)
+              <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                {{ $category->name }}
+              </option>
+            @endforeach
+          </select>
+
+           <label for="tag" class="form-label">Tag</label>
+          <select name="tags[]" id="tag" class="form-select" multiple>
+            @foreach($tags as $tag)
+              <option value="{{ $tag->id }}" {{ (collect(old('tags'))->contains($tag->id)) ? 'selected':'' }}>
+                {{ $tag->name }}
+              </option>
+            @endforeach
+          </select>
+        </div>
+
+        <div class="d-flex justify-content-end gap-2">
+          <a href="{{ route('task.index') }}" class="btn btn-outline-secondary">Cancel</a>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>
 </x-layout>
