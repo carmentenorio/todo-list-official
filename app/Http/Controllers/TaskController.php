@@ -1,6 +1,8 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\Tag;
 use App\Models\Task;
 use Illuminate\Http\Request;
 
@@ -10,8 +12,8 @@ class TaskController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {      
-        $tasks = Task::all(); 
+    {
+        $tasks = Task::with('category', 'tags')->latest()->get();
         return view('task.index', compact('tasks'));
     }
     /**
@@ -19,7 +21,10 @@ class TaskController extends Controller
      */
     public function create()
     {
-        return view('task.create');
+        $categories = Category::orderBy('name')->get();
+        $tags       = Tag::orderBy('name')->get();
+        return view('task.create', compact('categories', 'tags'));
+
     }
     /**
      * Store a newly created resource in storage.
@@ -30,9 +35,10 @@ class TaskController extends Controller
             'title'       => 'required|string|max:255',
             'description' => 'nullable|string',
         ]);
-        $task = new Task(); 
-        $task->title = $request->title;
+        $task              = new Task();
+        $task->title       = $request->title;
         $task->description = $request->description;
+        $task->completed   = $request->has('completed');
         $task->save();
         return redirect()->route('task.index');
     }
@@ -59,10 +65,9 @@ class TaskController extends Controller
             'title'       => 'required|string|max:255',
             'description' => 'nullable|string',
         ]);
-       
-        $task->title = $request->title;
+        $task->title       = $request->title;
         $task->description = $request->description;
-        $task->completed = $request->has('completed'); 
+        $task->completed   = $request->has('completed');
         $task->save();
         return redirect()->route('task.index')->with('success', 'Tarea actualizada ✏️');
     }
