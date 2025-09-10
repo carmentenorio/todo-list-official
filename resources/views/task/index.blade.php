@@ -10,7 +10,7 @@
                 <div class="task border p-3 mb-3 bg-white rounded">
                     <form action="{{ route('task.update', $task->id )}}" method="POST" class="d-inline">
                         @csrf
-                        @method('POST')
+                        @method('PUT')
                         <input type="checkbox" onChange="this.form.submit()" {{ $task->completed ? 'checked' : '' }} >
                     </form>
                     <form action="{{ route('task.destroy', $task->id) }}" method="POST" style="display:inline;">

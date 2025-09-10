@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
-
+use App\Models\Category;
+use App\Models\Tag;
 use App\Models\Task;
 use Illuminate\Http\Request;
 
@@ -10,8 +11,8 @@ class TaskController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {      
-        $tasks = Task::all(); 
+    {    
+$tasks = Task::with('category', 'tags')->latest()->get();
         return view('task.index', compact('tasks'));
     }
     /**
@@ -19,7 +20,11 @@ class TaskController extends Controller
      */
     public function create()
     {
-        return view('task.create');
+
+         $categories = Category::orderBy('name')->get();
+        $tags = Tag::orderBy('name')->get();
+        return view('task.create', compact('categories','tags'));
+    
     }
     /**
      * Store a newly created resource in storage.
