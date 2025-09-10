@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Task extends Model
 {
-   
+
     protected $casts = [
         'completed'  => 'boolean',
         'deleted_at' => 'datetime',
