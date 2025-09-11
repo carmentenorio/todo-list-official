@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\Tag;
@@ -12,7 +11,7 @@ class TagController extends Controller
      */
     public function index()
     {
-        $tags = Tag::all(); 
+        $tags = Tag::all();
         return view('tag.index', compact('tags'));
     }
 
@@ -33,7 +32,7 @@ class TagController extends Controller
             'name' => 'required|string|max:255',
         ]);
 
-        $tag = new Tag();
+        $tag       = new Tag();
         $tag->name = $request->name;
         $tag->save();
         return redirect()->route('tag.index');
@@ -44,9 +43,9 @@ class TagController extends Controller
      */
     public function show(Tag $tag)
     {
-         return view('tag.show', compact('tag'));
+        return view('tag.show', compact('tag'));
     }
-    
+
     /**
      * Show the form for editing the specified resource.
      */
@@ -60,22 +59,22 @@ class TagController extends Controller
      */
     public function update(Request $request, Tag $tag)
     {
-         $request->validate([
-            'name'       => 'required|string|max:255',
+        $request->validate([
+            'name' => 'required|string|max:255',
         ]);
         $tag->name = $request->name;
         $tag->save();
-        return redirect()->route('tag.index')->with('success', 'Tag actualizada ✏️');
+        return redirect()->route('tag.index')->with('success', 'Updated tag ✏️');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-        public function destroy(string $id)
+    public function destroy(Tag $tag)
     {
-        $tag = Tag::findOrFail($id);
         $tag->delete();
-        return redirect()->route('tag.index', ['tag' => $tag])
-            ->with('success', 'Tag eliminada 🗑️');
+
+        return redirect()->route('tag.index')
+            ->with('success', 'Tag removed 🗑️');
     }
-}
+ }

@@ -19,12 +19,9 @@
 
               <h2 class="h5 d-inline ms-2">{{ $category->name }}</h2>
             </div>
-
             <div class="d-flex gap-2">
               <a href="{{ route('category.show', $category) }}" class="btn btn-primary btn-sm btn-icon"><i class="fa-solid fa-eye fa-fw"></i></a>
               <a href="{{ route('category.edit', $category) }}" class="btn btn-secondary btn-sm btn-icon"><i class="fa-solid fa-pen-to-square fa-fw"></i></a>
-
-              {{-- ELIMINAR: mismo form; botón abre modal --}}
               <form id="delete-form-{{ $category->id }}" action="{{ route('category.destroy', $category->id) }}" method="POST" class="d-inline">
                 @csrf
                 @method('DELETE')
