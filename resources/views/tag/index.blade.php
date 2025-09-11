@@ -40,9 +40,9 @@
 @push('modals')
   @include('partials.confirm-delete-modal', [
     'modalId' => 'confirmDeleteModal',
-    'title' => 'Eliminar tarea',
-    'message' => 'Esta acción no se puede deshacer. ¿Deseas eliminar la tarea?',
-    'confirmLabel' => 'Eliminar'
+    'title' => 'Delete tag',
+    'message' => 'This action cannot be undone. Do you want to delete the tag?',
+    'confirmLabel' => 'Eliminate'
   ])
 @endpush
 @endsection

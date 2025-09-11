@@ -1,5 +1,4 @@
 @php
-  // Cambia los minutos desde cada vista con ['autoDismissMinutes' => N]
   $autoDismissMinutes = $autoDismissMinutes ?? 0; // 0 = no autocerrar
 @endphp
 
@@ -29,7 +28,6 @@
 
 @push('scripts')
 <script>
-  // Autocerrar alerts por minutos usando el atributo data-auto-dismiss-min
   document.querySelectorAll('.alert[data-auto-dismiss-min]').forEach(function(el){
     const mins = parseFloat(el.getAttribute('data-auto-dismiss-min')) || 0;
     if(mins > 0){
