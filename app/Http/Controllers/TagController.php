@@ -39,10 +39,12 @@ class TagController extends Controller
     /**
      * Display the specified resource.
      */
+    
     public function show(Tag $tag)
     {
          return view('tag.show', compact('tag'));
     }
+    
     /**
      * Show the form for editing the specified resource.
      */

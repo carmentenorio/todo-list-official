@@ -35,7 +35,7 @@
         </div>
         <div class="mb-3">
     <label for="category" class="form-label">Category</label>
-    <select name="category_id" id="category" class="form-select" required>
+    <select name="category_id" id="category" class="form-select">
         <option value="">Select a category</option>
         @foreach($categories as $category)
             <option value="{{ $category->id }}" 
@@ -55,7 +55,7 @@
     </select>
 </div>
         <div class="d-flex justify-content-end gap-2">
-          <button type="submit" class="btn btn-primary">Actualizar</button>
+          <button type="submit" class="btn btn-primary">Update</button>
           <a href="{{ route('task.index') }}" class="btn btn-outline-secondary">Cancel</a>
         </div>
       </form>

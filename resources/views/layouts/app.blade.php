@@ -13,8 +13,6 @@
   {{-- Bootstrap 5 / FontAwesome --}}
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-
-  {{-- Estilos base del layout --}}
   <style>
     :root { --radius: 12px; }
     body { background-color: #f8f9fa; }
@@ -27,11 +25,9 @@
     .nav-link.active, .nav-link.active:focus, .nav-link.active:hover { color: #fff !important; }
     
   </style>
-  {{-- Slot para estilos de vistas hijas --}}
   @stack('styles')
 </head>
 <body>
-  {{-- Navbar --}}
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
     <div class="container">
       <a class="navbar-brand fw-bold" href="{{ route('task.index') }}">
@@ -43,12 +39,9 @@
       </button>
 
       <div class="collapse navbar-collapse" id="navbarNav">
-        {{-- (Opcional) zona izquierda --}}
         <ul class="navbar-nav me-auto">
           @yield('navbar_left')
         </ul>
-
-        {{-- Zona derecha --}}
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
             <a class="nav-link {{ request()->routeIs('task.index') ? 'active' : '' }}" href="{{ route('task.index') }}">
@@ -72,26 +65,18 @@
       </div>
     </div>
   </nav>
-
-  {{-- Contenedor principal --}}
   <div class="container">
-    {{-- Alerts de sesión / errores (auto-dismiss). Puedes cambiar los minutos aquí o por vista) --}}
-    @include('partials.alerts', ['autoDismissMinutes' => 1])
-
-    {{-- (Opcional) toolbar superior por vista: títulos, botones, filtros, etc. --}}
+   @include('partials.alerts', ['autoDismissMinutes' => 1])
     @hasSection('toolbar')
       <div class="d-flex flex-wrap gap-2 align-items-center justify-content-between mb-3">
         @yield('toolbar')
       </div>
     @endif
-
-    {{-- Contenido principal de cada vista --}}
     @yield('content')
   </div>
 
   @push('scripts')
 <script>
-  // Cierra automáticamente los .alert después de N minutos (ajusta "mins")
   (function(mins = 1){
     if(!mins) return;
     document.querySelectorAll('.alert').forEach(function(el){
@@ -100,11 +85,9 @@
         inst.close();
       }, mins * 60 * 1000);
     });
-  })(1); // <- cambia 1 por los minutos deseados
+  })(1); 
 </script>
 @endpush
-
-  {{-- Footer --}}
   <footer>
     <p class="mb-0">
       <i class="fa-regular fa-copyright"></i>
@@ -112,13 +95,9 @@
     </p>
   </footer>
 
-  {{-- Bootstrap bundle --}}
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
-  {{-- Stack de scripts de vistas hijas --}}
   @stack('scripts')
 
-  {{-- Stack de modales globales (para usarlos desde cualquier vista) --}}
   @stack('modals')
 </body>
 </html>

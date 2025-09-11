@@ -31,7 +31,7 @@
                   <p class="mb-2 mt-2">{{ $task->description }}</p>
                 @endif
                 @if($task->category)
-                  <span class="badge bg-info me-1">Categoría: {{ $task->category->name }}</span>
+                  <span class="badge bg-info me-1">Category: {{ $task->category->name }}</span>
                 @endif
                 @if($task->tags && $task->tags->count())
                   <div class="mt-2">

@@ -21,7 +21,7 @@
         </div>
         <div class="mb-3">
           <label for="category" class="form-label">Category</label>
-          <select name="category_id" id="category" class="form-select" required>
+          <select name="category_id" id="category" class="form-select">
             <option value="">Select a category</option>
             @foreach($categories as $category)
               <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>

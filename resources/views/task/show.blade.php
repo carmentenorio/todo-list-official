@@ -14,7 +14,7 @@
       <p class="mb-1 text-muted small">{{ $task->created_at->format('d/m/Y H:i') }}</p>
       <p>{{ $task->description }}</p>
       @if($task->category)
-          <p>Categoría: {{ $task->category->name }}</p>
+          <p>Category: {{ $task->category->name }}</p>
       @endif
       @if($task->tags->count())
           <p>Tags:

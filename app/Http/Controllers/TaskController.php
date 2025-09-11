@@ -31,10 +31,9 @@ class TaskController extends Controller
         $request->validate([
             'title'       => 'required|string|max:255',
             'description' => 'nullable|string',
-            'category_id' => 'required|exists:categories,id',
-            'tags'        => 'array',
+            'category_id' => 'nullable|exists:categories,id',
             'tags.*'      => 'integer|exists:tags,id',
-
+            'tags'        => 'nullable|array',
         ]);
         $task              = new Task();
         $task->title       = $request->title;
@@ -48,18 +47,15 @@ class TaskController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
-    {
-        $task = Task::with(['category', 'tags'])->findOrFail($id);
+    public function show(Task $task){
+        $task->load(['category', 'tags']);
         return view('task.show', compact('task'));
-        //return view('task.show', compact('task'));
     }
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(Task $task)
     {
-        //return view('task.edit', compact('task'));
         $task->load(['category', 'tags']);
         $categories = Category::all();
         $tags       = Tag::all();
@@ -88,11 +84,9 @@ class TaskController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
-    {
-        $task = Task::findOrFail($id);
-        $task->delete();
-        return redirect()->route('task.index', ['task' => $task])
+     public function destroy(Task $task){
+            $task->delete();
+            return redirect()->route('task.index')
             ->with('success', 'Tarea eliminada 🗑️');
-    }
+     }
 }
