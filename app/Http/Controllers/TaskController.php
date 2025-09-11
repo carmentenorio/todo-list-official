@@ -1,9 +1,11 @@
 <?php
 namespace App\Http\Controllers;
+
 use App\Models\Category;
 use App\Models\Tag;
 use App\Models\Task;
 use Illuminate\Http\Request;
+
 class TaskController extends Controller
 {
     /**
@@ -47,7 +49,8 @@ class TaskController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Task $task){
+    public function show(Task $task)
+    {
         $task->load(['category', 'tags']);
         return view('task.show', compact('task'));
     }
@@ -70,8 +73,8 @@ class TaskController extends Controller
             'title'       => 'required|string|max:255',
             'description' => 'nullable|string',
             'category_id' => 'nullable|exists:categories,id',
-            'tags' => 'nullable|array',
-            'tags.*' => 'exists:tags,id',
+            'tags'        => 'nullable|array',
+            'tags.*'      => 'exists:tags,id',
         ]);
         $task->title       = $request->title;
         $task->description = $request->description;
@@ -84,9 +87,10 @@ class TaskController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-     public function destroy(Task $task){
-            $task->delete();
-            return redirect()->route('task.index')
+    public function destroy(Task $task)
+    {
+        $task->delete();
+        return redirect()->route('task.index')
             ->with('success', 'Tarea eliminada 🗑️');
-     }
+    }
 }
