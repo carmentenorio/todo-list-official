@@ -51,19 +51,17 @@ class CategoryController extends Controller
         $request->validate([
             'name'=> 'required|string|max:255',
         ]);
-       
         $category->name = $request->name;
         $category->save();
-        return redirect()->route('category.index')->with('success', 'Category actualizada ✏️');
+        return redirect()->route('category.index')->with('success', 'Category updated ✏️');
     }
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+     public function destroy(Category $category)
     {
-        $category = Category::findOrFail($id);
         $category->delete();
-        return redirect()->route('category.index', ['category' => $category])
-            ->with('success', 'Categoria eliminada 🗑️');
+        return redirect()->route('tag.index')
+            ->with('success', 'Category removed 🗑️');
     }
 }
