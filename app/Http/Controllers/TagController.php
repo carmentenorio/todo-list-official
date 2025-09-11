@@ -15,7 +15,6 @@ class TagController extends Controller
         $tags = Tag::all(); 
         return view('tag.index', compact('tags'));
     }
-
     /**
      * Show the form for creating a new resource.
      */
@@ -23,7 +22,6 @@ class TagController extends Controller
     {
         return view('tag.create');
     }
-
     /**
      * Store a newly created resource in storage.
      */
@@ -36,10 +34,8 @@ class TagController extends Controller
         $tag = new Tag();
         $tag->name = $request->name;
         $tag->save();
-
         return redirect()->route('tag.index');
     }
-
     /**
      * Display the specified resource.
      */
@@ -47,7 +43,6 @@ class TagController extends Controller
     {
          return view('tag.show', compact('tag'));
     }
-
     /**
      * Show the form for editing the specified resource.
      */
@@ -55,7 +50,6 @@ class TagController extends Controller
     {
         return view('tag.edit', compact('tag'));
     }
-    
     /**
      * Update the specified resource in storage.
      */
@@ -64,12 +58,10 @@ class TagController extends Controller
          $request->validate([
             'name'       => 'required|string|max:255',
         ]);
-       
         $tag->name = $request->name;
         $tag->save();
         return redirect()->route('tag.index')->with('success', 'Tag actualizada ✏️');
     }
-
     /**
      * Remove the specified resource from storage.
      */

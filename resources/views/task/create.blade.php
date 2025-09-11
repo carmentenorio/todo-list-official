@@ -1,10 +1,8 @@
 @extends('layouts.app')
 @section('title', 'Create Task')
-
 @section('content')
 <div class="container mt-4">
   <h1 class="h3 mb-3">Create New Task</h1>
-
   <div class="card shadow-sm">
     <div class="card-body">
       <form action="{{ route('task.store') }}" method="POST" class="task-form">
@@ -12,20 +10,15 @@
         <div class="form-check mb-3">
           <input class="form-check-input" type="checkbox" name="completed" id="completed" {{ old('completed') ? 'checked' : '' }}>
           <label class="form-check-label" for="completed">Completed?</label>
-
         </div>
-
         <div class="mb-3">
           <label for="title" class="form-label">Name of the task</label>
-
           <input type="text" name="title" id="title" placeholder="Enter task title" class="form-control" value="{{ old('title') }}" required>
         </div>
-
         <div class="mb-3">
           <label for="description" class="form-label">Description</label>
           <textarea name="description" id="description" placeholder="Enter task description" class="form-control" rows="3" required>{{ old('description') }}</textarea>
         </div>
-        
         <div class="mb-3">
           <label for="category" class="form-label">Category</label>
           <select name="category_id" id="category" class="form-select" required>
@@ -36,7 +29,6 @@
               </option>
             @endforeach
           </select>
-
            <label for="tag" class="form-label">Tag</label>
           <select name="tags[]" id="tag" class="form-select" multiple>
             @foreach($tags as $tag)
@@ -46,7 +38,6 @@
             @endforeach
           </select>
         </div>
-
         <div class="d-flex justify-content-end gap-2">
           <a href="{{ route('task.index') }}" class="btn btn-outline-secondary">Cancel</a>
           <button type="submit" class="btn btn-primary">Submit</button>

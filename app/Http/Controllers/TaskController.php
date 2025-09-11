@@ -1,11 +1,9 @@
 <?php
 namespace App\Http\Controllers;
-
 use App\Models\Category;
 use App\Models\Tag;
 use App\Models\Task;
 use Illuminate\Http\Request;
-
 class TaskController extends Controller
 {
     /**
@@ -22,9 +20,8 @@ class TaskController extends Controller
     public function create()
     {
         $categories = Category::orderBy('name')->get();
-
-        $tags = Tag::orderBy('name')->get();
-        return view('task.create', compact('categories','tags'));
+        $tags       = Tag::orderBy('name')->get();
+        return view('task.create', compact('categories', 'tags'));
     }
     /**
      * Store a newly created resource in storage.
@@ -34,35 +31,39 @@ class TaskController extends Controller
         $request->validate([
             'title'       => 'required|string|max:255',
             'description' => 'nullable|string',
-            'category_id'  => 'required|exists:categories,id',
-            'tags'         => 'array',
-            'tags.*'       => 'integer|exists:tags,id',
+            'category_id' => 'required|exists:categories,id',
+            'tags'        => 'array',
+            'tags.*'      => 'integer|exists:tags,id',
 
         ]);
         $task              = new Task();
         $task->title       = $request->title;
         $task->description = $request->description;
-        $task->completed = $request->has('completed');
-        $task->category_id = $request->category_id; 
+        $task->completed   = $request->has('completed');
+        $task->category_id = $request->category_id;
         $task->save();
-
         $task->tags()->sync($validated['tags'] ?? []);
-        
         return redirect()->route('task.index');
     }
     /**
      * Display the specified resource.
      */
-    public function show(Task $task)
+    public function show($id)
     {
+        $task = Task::with(['category', 'tags'])->findOrFail($id);
         return view('task.show', compact('task'));
+        //return view('task.show', compact('task'));
     }
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(Task $task)
     {
-        return view('task.edit', compact('task'));
+        //return view('task.edit', compact('task'));
+        $task->load(['category', 'tags']);
+        $categories = Category::all();
+        $tags       = Tag::all();
+        return view('task.edit', compact('task', 'categories', 'tags'));
     }
     /**
      * Update the specified resource in storage.
@@ -72,10 +73,15 @@ class TaskController extends Controller
         $request->validate([
             'title'       => 'required|string|max:255',
             'description' => 'nullable|string',
+            'category_id' => 'nullable|exists:categories,id',
+            'tags' => 'nullable|array',
+            'tags.*' => 'exists:tags,id',
         ]);
         $task->title       = $request->title;
         $task->description = $request->description;
         $task->completed   = $request->has('completed');
+        $task->category_id = $request->category_id;
+        $task->tags()->sync($request->tags ?? []);
         $task->save();
         return redirect()->route('task.index')->with('success', 'Tarea actualizada ✏️');
     }
