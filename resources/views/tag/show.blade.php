@@ -10,7 +10,6 @@
       </div>
       <div class="d-flex gap-2 mt-3">
         <a href="{{ route('tag.index') }}" class="btn btn-outline-secondary">Back to Tags</a>
-        <a href="{{ route('tag.edit', $tag) }}" class="btn btn-primary">Edit</a>
       </div>
     </div>
   </div>

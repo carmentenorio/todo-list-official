@@ -68,11 +68,11 @@
     </div>
   </div>
   @push('modals')
-    @include('partials.confirm-delete-modal', [
-      'modalId' => 'confirmDeleteModal',
-      'title' => 'Eliminar tarea',
-      'message' => 'Esta acción no se puede deshacer. ¿Deseas eliminar la tarea?',
-      'confirmLabel' => 'Eliminar'
-    ])
+  @include('partials.confirm-delete-modal', [
+    'modalId' => 'confirmDeleteModal',
+    'title' => 'Delete task',
+    'message' => 'This action cannot be undone. Do you want to delete the task?',
+    'confirmLabel' => 'Eliminate'
+  ])
   @endpush
 @endsection
