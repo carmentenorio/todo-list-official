@@ -24,7 +24,6 @@ class TaskController extends Controller
         $categories = Category::orderBy('name')->get();
         $tags       = Tag::orderBy('name')->get();
         return view('task.create', compact('categories', 'tags'));
-
     }
     /**
      * Store a newly created resource in storage.
@@ -34,12 +33,17 @@ class TaskController extends Controller
         $request->validate([
             'title'       => 'required|string|max:255',
             'description' => 'nullable|string',
+            'category_id' => 'nullable|exists:categories,id',
+            'tags.*'      => 'integer|exists:tags,id',
+            'tags'        => 'nullable|array',
         ]);
         $task              = new Task();
         $task->title       = $request->title;
         $task->description = $request->description;
         $task->completed   = $request->has('completed');
+        $task->category_id = $request->category_id;
         $task->save();
+        $task->tags()->sync($validated['tags'] ?? []);
         return redirect()->route('task.index');
     }
     /**
@@ -47,6 +51,7 @@ class TaskController extends Controller
      */
     public function show(Task $task)
     {
+        $task->load(['category', 'tags']);
         return view('task.show', compact('task'));
     }
     /**
@@ -54,7 +59,10 @@ class TaskController extends Controller
      */
     public function edit(Task $task)
     {
-        return view('task.edit', compact('task'));
+        $task->load(['category', 'tags']);
+        $categories = Category::all();
+        $tags       = Tag::all();
+        return view('task.edit', compact('task', 'categories', 'tags'));
     }
     /**
      * Update the specified resource in storage.
@@ -64,21 +72,25 @@ class TaskController extends Controller
         $request->validate([
             'title'       => 'required|string|max:255',
             'description' => 'nullable|string',
+            'category_id' => 'nullable|exists:categories,id',
+            'tags'        => 'nullable|array',
+            'tags.*'      => 'exists:tags,id',
         ]);
         $task->title       = $request->title;
         $task->description = $request->description;
         $task->completed   = $request->has('completed');
+        $task->category_id = $request->category_id;
+        $task->tags()->sync($request->tags ?? []);
         $task->save();
         return redirect()->route('task.index')->with('success', 'Tarea actualizada ✏️');
     }
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(Task $task)
     {
-        $task = Task::findOrFail($id);
         $task->delete();
-        return redirect()->route('task.index', ['task' => $task])
+        return redirect()->route('task.index')
             ->with('success', 'Tarea eliminada 🗑️');
     }
 }

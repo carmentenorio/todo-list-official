@@ -19,7 +19,6 @@ return new class extends Migration
             $table->unique(['task_id', 'tag_id']);//evita duplicados
         });
     }
-
     /**
      * Reverse the migrations.
      */

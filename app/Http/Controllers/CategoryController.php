@@ -1,13 +1,9 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use App\Models\Category;
 use Illuminate\Http\Request;
-
 class CategoryController extends Controller
 {
-    //
     public function index()
     {      
         $categories = Category::all(); 
@@ -26,53 +22,48 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title'       => 'required|string|max:255',
-            'description' => 'nullable|string',
+            'name'=> 'required|string|max:255',
         ]);
-        $task = new Category(); 
-        $task->title = $request->title;
-        $task->description = $request->description;
-        $task->save();
-        return redirect()->route('task.index');
+        $category = new Category(); 
+        $category->name = $request->name;
+        $category->save();
+        return redirect()->route('category.index');
     }
     /**
      * Display the specified resource.
      */
-    public function show(Category $task)
+    public function show(Category $category)
     {
-        return view('task.show', compact('task'));
+        return view('category.show', compact('category'));
     }
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Category $task)
+    public function edit(Category $category)
     {
-        return view('task.edit', compact('task'));
+        return view('category.edit', compact('category'));
     }
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Category $task)
+    public function update(Request $request, Category $category)
     {
         $request->validate([
-            'title'       => 'required|string|max:255',
-            'description' => 'nullable|string',
+            'name'=> 'required|string|max:255',
         ]);
        
-        $task->title = $request->title;
-        $task->description = $request->description;
-        $task->completed = $request->has('completed'); 
-        $task->save();
-        return redirect()->route('task.index')->with('success', 'Tarea actualizada ✏️');
+        $category->name = $request->name;
+        $category->save();
+        return redirect()->route('category.index')->with('success', 'Category actualizada ✏️');
     }
     /**
      * Remove the specified resource from storage.
      */
     public function destroy($id)
     {
-        $task = Category::findOrFail($id);
-        $task->delete();
-        return redirect()->route('task.index', ['task' => $task])
-            ->with('success', 'Tarea eliminada 🗑️');
+        $category = Category::findOrFail($id);
+        $category->delete();
+        return redirect()->route('category.index', ['category' => $category])
+            ->with('success', 'Categoria eliminada 🗑️');
     }
 }
