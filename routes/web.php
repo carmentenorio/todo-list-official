@@ -8,7 +8,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::resource('task', TaskController::class);
-Route::delete('/tasks/{task}', [TaskController::class, 'destroy'])->name('task.destroy');
 Route::resource('tag', TagController::class);
 Route::resource('category', CategoryController::class);
 

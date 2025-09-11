@@ -15,6 +15,7 @@ class TagController extends Controller
         $tags = Tag::all(); 
         return view('tag.index', compact('tags'));
     }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -22,6 +23,7 @@ class TagController extends Controller
     {
         return view('tag.create');
     }
+
     /**
      * Store a newly created resource in storage.
      */
@@ -36,10 +38,10 @@ class TagController extends Controller
         $tag->save();
         return redirect()->route('tag.index');
     }
+
     /**
      * Display the specified resource.
      */
-    
     public function show(Tag $tag)
     {
          return view('tag.show', compact('tag'));
@@ -52,6 +54,7 @@ class TagController extends Controller
     {
         return view('tag.edit', compact('tag'));
     }
+
     /**
      * Update the specified resource in storage.
      */
@@ -64,10 +67,11 @@ class TagController extends Controller
         $tag->save();
         return redirect()->route('tag.index')->with('success', 'Tag actualizada ✏️');
     }
+
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+        public function destroy(string $id)
     {
         $tag = Tag::findOrFail($id);
         $tag->delete();

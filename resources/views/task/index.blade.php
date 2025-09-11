@@ -43,10 +43,10 @@
               </div>
               <div class="d-flex flex-shrink-0 gap-2">
                 <a href="{{ route('task.show', $task) }}" class="btn btn-primary btn-sm btn-icon" title="View">
-                  <i class="fa-solid fa-eye fa-fw"></i> View
+                  <i class="fa-solid fa-eye fa-fw"></i>
                 </a>
                 <a href="{{ route('task.edit', $task) }}" class="btn btn-secondary btn-sm btn-icon" title="Edit">
-                  <i class="fa-solid fa-pen-to-square fa-fw"></i> Edit
+                  <i class="fa-solid fa-pen-to-square fa-fw"></i>
                 </a>
                 <form id="delete-form-{{ $task->id }}" action="{{ route('task.destroy', $task->id) }}" method="POST" class="d-inline">
                   @csrf
