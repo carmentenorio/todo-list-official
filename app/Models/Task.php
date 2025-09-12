@@ -4,15 +4,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 class Task extends Model
 {
+    use SoftDeletes;
     protected $casts = [
         'completed'  => 'boolean',
         'deleted_at' => 'datetime',
     ];
-    /**
-     * RETURN  of categories
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany<Category, Task>
-     */
-    use SoftDeletes;
     protected $dates = ['deleted_at'];
     public function category()
     {

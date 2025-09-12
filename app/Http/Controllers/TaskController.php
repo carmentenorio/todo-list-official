@@ -91,6 +91,6 @@ class TaskController extends Controller
     {
         $task->delete();
         return redirect()->route('task.index')
-            ->with('success', 'Tarea eliminada 🗑️');
+            ->with('success', 'Task removed 🗑️');
     }
 }
