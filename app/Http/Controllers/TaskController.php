@@ -16,6 +16,7 @@ class TaskController extends Controller
         $tasks = Task::with('category', 'tags')->latest()->get();
         return view('task.index', compact('tasks'));
     }
+    
     /**
      * Show the form for creating a new resource.
      */
