@@ -29,13 +29,12 @@ class TaskController extends Controller
             'category_id' => 'nullable|exists:categories,id',
             'tags.*'      => 'integer|exists:tags,id',
             'tags'        => 'nullable|array',
-            'completed'   => 'boolean',
+            'completed'   => 'required|in:0,1',
         ]);
-
         $task              = new Task();
         $task->title       = $validated['title'];
         $task->description = $validated['description'] ?? null;
-        $task->completed   = $request->has('completed');
+        $task->completed   = $validated['completed'];
         $task->category_id = $validated['category_id'] ?? null;
         $task->save();
 
@@ -62,22 +61,27 @@ class TaskController extends Controller
     public function update(Request $request, Task $task)
     {
         $validated = $request->validate([
-            'title'       => 'required|string|max:255',
+            'title'       => 'nullable|string|max:255',
             'description' => 'nullable|string',
             'category_id' => 'nullable|exists:categories,id',
             'tags'        => 'nullable|array',
             'tags.*'      => 'exists:tags,id',
-            'completed'   => 'boolean',
+            'completed'   => 'nullable|in:0,1',
         ]);
+        \Illuminate\Support\Facades\Log::info($request);
+        if ($request->title) {$task->title = $validated['title'];}
+        if ($request->description) {$task->description = $validated['description'] ?? null;}
+        $task->completed = $validated['completed'] ?? $task->completed;
 
-        $task->title       = $validated['title'];
-        $task->description = $validated['description'] ?? null;
-        $task->completed   = $request->has('completed');
-        $task->category_id = $validated['category_id'] ?? null;
+        if ($request->category_id) {
+            $task->category_id = $validated['category_id'] ?? null;
+        }
+
         $task->save();
 
-        $task->tags()->sync($validated['tags'] ?? []);
-
+        if ($request->has('tags')) {
+            $task->tags()->sync($validated['tags'] ?? []);
+        }
         return redirect()->route('task.index')
             ->with('success', 'Task updated successfully');
     }

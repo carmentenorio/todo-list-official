@@ -56,6 +56,7 @@ class TagController extends Controller
     public function destroy(Tag $tag)
     {
         $tag->delete();
-        return response()->json(null, 201);
+       return response()->json([$tag
+        ],201);
     }
 }

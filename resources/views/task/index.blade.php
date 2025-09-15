@@ -18,9 +18,14 @@
                   <form action="{{ route('task.update', $task->id) }}" method="POST" class="me-2">
                     @csrf
                     @method('PUT')
-                    <input type="checkbox"
-                           onChange="this.form.submit()"
-                           {{ $task->completed ? 'checked' : '' }}>
+                 <input type="hidden" name="completed" value="0">
+                 <input 
+            type="checkbox" 
+            name="completed" 
+            value="1" 
+            onchange="this.form.submit()"
+            {{ $task->completed ? 'checked' : '' }}
+        >
                   </form>
                   <h2 class="h5 mb-0">{{ $task->title }}</h2>
                 </div>
@@ -45,9 +50,8 @@
                 <a href="{{ route('task.show', $task) }}" class="btn btn-primary btn-sm btn-icon" title="View">
                   <i class="fa-solid fa-eye fa-fw"></i>
                 </a>
-                <a href="{{ route('task.edit', $task) }}" class="btn btn-secondary btn-sm btn-icon" title="Edit">
-                  <i class="fa-solid fa-pen-to-square fa-fw"></i>
-                </a>
+                   <a href="{{ route('task.edit', $task) }}" class="btn btn-secondary btn-sm btn-icon"><i class="fa-solid fa-pen-to-square fa-fw"></i></a>
+              
                 <form id="delete-form-{{ $task->id }}" action="{{ route('task.destroy', $task->id) }}" method="POST" class="d-inline">
                   @csrf
                   @method('DELETE')

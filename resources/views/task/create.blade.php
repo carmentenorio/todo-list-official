@@ -7,10 +7,20 @@
     <div class="card-body">
       <form action="{{ route('task.store') }}" method="POST" class="task-form">
         @csrf
-        <div class="form-check mb-3">
-          <input class="form-check-input" type="checkbox" name="completed" id="completed" {{ old('completed') ? 'checked' : '' }}>
-          <label class="form-check-label" for="completed">Completed?</label>
-        </div>
+       <div class="form-check mb-3">
+    <input type="hidden" name="completed" value="0">
+    <input 
+        class="form-check-input" 
+        type="checkbox" 
+        name="completed" 
+        id="completed" 
+        value="1"
+        {{ old('completed', $task->completed ?? 0) == 1 ? 'checked' : '' }}
+    >
+    <label class="form-check-label" for="completed">Completed?</label>
+</div>
+
+
         <div class="mb-3">
           <label for="title" class="form-label">Name of the task</label>
           <input type="text" name="title" id="title" placeholder="Enter task title" class="form-control" value="{{ old('title') }}" required>
