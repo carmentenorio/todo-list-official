@@ -10,7 +10,7 @@ class TagController extends Controller
     public function index()
     {
         $tags = Tag::all();
-        return response()->json(['data' => $tags]);
+        return response()->json(['data' => $tags], 200);
     }
 
     /**
@@ -24,7 +24,7 @@ class TagController extends Controller
         $tag= new Tag();
         $tag->name = $request->name;
         $tag->save();
-        return response()->json(['data' => $tag]);
+        return response()->json(['data' => $tag], 201);
     }
 
     /**
@@ -34,7 +34,7 @@ class TagController extends Controller
     {
         return response()->json([
             'data' => $tag,
-        ]);
+        ], 200);
     }
 
     /**
@@ -47,7 +47,7 @@ class TagController extends Controller
         ]);
         $tag->name = $request->name;
         $tag->save();
-        return response()->json(['data' => $tag]);
+        return response()->json(['data' => $tag], 201);
     }
 
     /**
@@ -56,6 +56,6 @@ class TagController extends Controller
     public function destroy(Tag $tag)
     {
         $tag->delete();
-        return response()->json(['message' => 'Tag removed']);
+        return response()->json(null, 201);
     }
 }

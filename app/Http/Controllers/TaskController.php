@@ -21,7 +21,6 @@ class TaskController extends Controller
         return view('task.create', compact('categories', 'tags'));
     }
 
-
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -43,7 +42,7 @@ class TaskController extends Controller
         $task->tags()->sync($validated['tags'] ?? []);
 
         return redirect()->route('task.index')
-            ->with('success', 'Tarea creada con éxito');
+            ->with('success', 'Task created successfully');
     }
 
     public function show(Task $task)
@@ -80,7 +79,7 @@ class TaskController extends Controller
         $task->tags()->sync($validated['tags'] ?? []);
 
         return redirect()->route('task.index')
-            ->with('success', 'Tarea actualizada con éxito');
+            ->with('success', 'Task updated successfully');
     }
 
     public function destroy(Task $task)
@@ -88,6 +87,6 @@ class TaskController extends Controller
         $task->delete();
 
         return redirect()->route('task.index')
-            ->with('success', 'Task removed 🗑️');
+            ->with('success', 'Deleted task');
     }
 }

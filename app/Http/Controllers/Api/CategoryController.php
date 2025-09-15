@@ -10,7 +10,7 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::all();
-        return response()->json(['data' => $categories]);
+        return response()->json(['data' => $categories], 200);
     }
 
     /**
@@ -24,7 +24,7 @@ class CategoryController extends Controller
         $category= new Category();
         $category->name = $request->name;
         $category->save();
-        return response()->json(['data' => $category]);
+        return response()->json(['data' => $category],201);
     }
 
     /**
@@ -34,7 +34,7 @@ class CategoryController extends Controller
     {
         return response()->json([
             'data' => $category,
-        ]);
+        ],200);
     }
 
     /**
@@ -47,7 +47,7 @@ class CategoryController extends Controller
         ]);
         $category->name = $request->name;
         $category->save();
-        return response()->json(['data' => $category]);
+        return response()->json(['data' => $category], 201);
     }
 
     /**
@@ -56,6 +56,6 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         $category->delete();
-        return response()->json(['message' => 'Category removed']);
+        return response()->json(null,201);
     }
 }
