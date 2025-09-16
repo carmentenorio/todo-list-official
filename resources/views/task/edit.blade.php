@@ -11,7 +11,7 @@
         <div class="mb-3">
           <label for="title" class="form-label">Title of the task</label>
          <div class="form-check mb-2">
-    <input type="hidden" name="completed" value="0"> <!-- 👈 valor por defecto -->
+    <input type="hidden" name="completed" value="0"> 
     <input 
         class="form-check-input" 
         type="checkbox" 

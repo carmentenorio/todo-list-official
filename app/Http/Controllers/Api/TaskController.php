@@ -36,7 +36,7 @@ class TaskController extends Controller
         $task->save();
         $task->tags()->sync($validated['tags'] ?? []);
         return response()->json([
-            'message' => 'Tarea creada con éxito',
+            'message' => 'Task created successfully',
             'data'    => $task->load('category', 'tags'),
         ], 201);
     }
@@ -71,7 +71,7 @@ class TaskController extends Controller
         $task->tags()->sync($request->tags ?? []);
         $task->save();
         return response()->json([
-            'message' => 'Tarea actualizada con éxito',
+            'message' => 'Task updated successfully',
             'data'    => $task->load('category', 'tags'),
         ]);
     }
