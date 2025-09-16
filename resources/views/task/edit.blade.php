@@ -10,10 +10,19 @@
         @method('PUT')
         <div class="mb-3">
           <label for="title" class="form-label">Title of the task</label>
-          <div class="form-check mb-2">
-            <input class="form-check-input" type="checkbox" name="completed" id="completed" value="1" {{ old('completed', $task->completed) ? 'checked' : '' }}>
-            <label for="completed" class="form-check-label">Completed?</label>
-          </div>
+         <div class="form-check mb-2">
+    <input type="hidden" name="completed" value="0"> 
+    <input 
+        class="form-check-input" 
+        type="checkbox" 
+        name="completed" 
+        id="completed" 
+        value="1" 
+        {{ old('completed', $task->completed) ? 'checked' : '' }}
+    >
+    <label for="completed" class="form-check-label">Completed?</label>
+</div>
+
           <input
             type="text"
             name="title"

@@ -8,89 +8,89 @@ use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $tasks = Task::with('category', 'tags')->latest()->get();
         return view('task.index', compact('tasks'));
     }
-    /**
-     * Show the form for creating a new resource.
-     */
+
     public function create()
     {
-        $categories = Category::orderBy('name')->get();
-        $tags       = Tag::orderBy('name')->get();
+        $categories = Category::latest('name')->get();
+        $tags       = Tag::latest('name')->get();
         return view('task.create', compact('categories', 'tags'));
     }
-    /**
-     * Store a newly created resource in storage.
-     */
+
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'title'       => 'required|string|max:255',
             'description' => 'nullable|string',
             'category_id' => 'nullable|exists:categories,id',
             'tags.*'      => 'integer|exists:tags,id',
             'tags'        => 'nullable|array',
+            'completed'   => 'required|in:0,1',
         ]);
         $task              = new Task();
-        $task->title       = $request->title;
-        $task->description = $request->description;
-        $task->completed   = $request->has('completed');
-        $task->category_id = $request->category_id;
+        $task->title       = $validated['title'];
+        $task->description = $validated['description'] ?? null;
+        $task->completed   = $validated['completed'];
+        $task->category_id = $validated['category_id'] ?? null;
         $task->save();
+
         $task->tags()->sync($validated['tags'] ?? []);
-        return redirect()->route('task.index');
+
+        return redirect()->route('task.index')
+            ->with('success', 'Task created successfully');
     }
-    /**
-     * Display the specified resource.
-     */
+
     public function show(Task $task)
     {
         $task->load(['category', 'tags']);
         return view('task.show', compact('task'));
     }
-    /**
-     * Show the form for editing the specified resource.
-     */
+
     public function edit(Task $task)
     {
-        $task->load(['category', 'tags']);
         $categories = Category::all();
         $tags       = Tag::all();
+        $task->load(['category', 'tags']);
         return view('task.edit', compact('task', 'categories', 'tags'));
     }
-    /**
-     * Update the specified resource in storage.
-     */
+
     public function update(Request $request, Task $task)
     {
-        $request->validate([
-            'title'       => 'required|string|max:255',
+        $validated = $request->validate([
+            'title'       => 'nullable|string|max:255',
             'description' => 'nullable|string',
             'category_id' => 'nullable|exists:categories,id',
             'tags'        => 'nullable|array',
             'tags.*'      => 'exists:tags,id',
+            'completed'   => 'nullable|in:0,1',
         ]);
-        $task->title       = $request->title;
-        $task->description = $request->description;
-        $task->completed   = $request->has('completed');
-        $task->category_id = $request->category_id;
-        $task->tags()->sync($request->tags ?? []);
+        \Illuminate\Support\Facades\Log::info($request);
+        if ($request->title) {$task->title = $validated['title'];}
+        if ($request->description) {$task->description = $validated['description'] ?? null;}
+        $task->completed = $validated['completed'] ?? $task->completed;
+
+        if ($request->category_id) {
+            $task->category_id = $validated['category_id'] ?? null;
+        }
+
         $task->save();
-        return redirect()->route('task.index')->with('success', 'Tarea actualizada ✏️');
+
+        if ($request->has('tags')) {
+            $task->tags()->sync($validated['tags'] ?? []);
+        }
+        return redirect()->route('task.index')
+            ->with('success', 'Task updated successfully');
     }
-    /**
-     * Remove the specified resource from storage.
-     */
+
     public function destroy(Task $task)
     {
         $task->delete();
+
         return redirect()->route('task.index')
-            ->with('success', 'Task removed 🗑️');
+            ->with('success', 'Deleted task');
     }
 }
