@@ -28,7 +28,7 @@ class AuthController extends Controller
 
         $token = $user->createToken('auth_token')->plainTextToken;
         return response()
-            ->json(['data' => $user, 'access_token' => $token, 'token_type' => 'Bearer']);
+            ->json(['data' => $user, 'access_token' => $token, 'token_type' => 'Bearer'], 201);
     }
 
     public function login(Request $request)
@@ -40,7 +40,7 @@ class AuthController extends Controller
         $user  = User::where('email', $request['email'])->firstOrFail();
         $token = $user->createToken('auth_token')->plainTextToken;
         return response()
-            ->json(['data' => $user, 'access_token' => $token, 'token_type' => 'Bearer']);
+            ->json(['data' => $user, 'access_token' => $token, 'token_type' => 'Bearer'], 201);
     }
 
     public function me()
@@ -54,6 +54,6 @@ class AuthController extends Controller
         return response()
             ->json([
             'message'=> 'You have sucessfully logged out and the token was sucessfully deleted',
-            ]);
+            ], 201);
     }
 }
