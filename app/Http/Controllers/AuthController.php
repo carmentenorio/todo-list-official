@@ -12,8 +12,8 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name'     => 'required|string|max:255',
-            'email'    => 'required|string|email|max:255|unique:users',
+            'name'=> 'required|string|max:255',
+            'email'=> 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
         ]);
 
@@ -21,8 +21,8 @@ class AuthController extends Controller
             return response()->json($validator->errors());
         }
         $user = User::create([
-            'name'     => $request->name,
-            'email'    => $request->email,
+            'name'=> $request->name,
+            'email'=> $request->email,
             'password' => Hash::make($request->password),
         ]);
 
@@ -40,27 +40,20 @@ class AuthController extends Controller
         $user  = User::where('email', $request['email'])->firstOrFail();
         $token = $user->createToken('auth_token')->plainTextToken;
         return response()
-            ->json([
-                'message'     => 'Hi',
-                'username'    => $user->name,
-                'accessToken' => $token,
-                'token_type'  => 'Bearer',
-                'user'        => $user,
-            ]);
+            ->json(['data' => $user, 'access_token' => $token, 'token_type' => 'Bearer']);
     }
 
     public function me()
     {
         return Auth::user();
-        // return auth()->user();
     }
 
     public function logout(Request $request)
     {
         $request->user()->tokens()->delete();
-        return [
-            'message' => 'You have sucessfully logged out and the token was sucessfully deleted',
-        ];
+        return response()
+            ->json([
+            'message'=> 'You have sucessfully logged out and the token was sucessfully deleted',
+            ]);
     }
-
 }
